@@ -1,0 +1,66 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 17
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> USE sse;
+Database changed
+mysql> select*from mentees;
++-----------+--------+------+---------+------------+-------+---------+
+| Regno     | Name   | Dept | Adress  | Fathername | Marks | subject |
++-----------+--------+------+---------+------------+-------+---------+
+| 192225039 | Ramu   | CSE  | Chennai | Ranga      |    91 | DBMS    |
+| 192225030 | SUS    | BEC  | RJDRY   | Raju       |    95 | ENGLISH |
+| 192226020 | Swetha | CSE  | Chennai | Srinivas   |    99 | DBMS    |
+| 192220301 | Devi   | CSE  | Chennai | SRI        |    99 | DBMS    |
++-----------+--------+------+---------+------------+-------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select Regno,Name from mentees where Name IN(select Name from mentees where Dept="CSE");
++-----------+--------+
+| Regno     | Name   |
++-----------+--------+
+| 192225039 | Ramu   |
+| 192226020 | Swetha |
+| 192220301 | Devi   |
++-----------+--------+
+3 rows in set (0.01 sec)
+
+mysql> CREATE TABLE mentees1(Id int(10),Name varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into mentees1(Id,Name)
+    -> select Regno,Name
+    -> from mentees where Dept="CSE";
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*from mentees1;
++-----------+--------+
+| Id        | Name   |
++-----------+--------+
+| 192225039 | Ramu   |
+| 192226020 | Swetha |
+| 192220301 | Devi   |
++-----------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select Regno,(select Name from mentees1 where Id=192225039)as Name,Dept,Address,Marks,subject from mentees where Regno=192225039;
+ERROR 1054 (42S22): Unknown column 'Address' in 'field list'
+mysql> select Regno,(select Name from mentees1 where Id=192226020)as Name,Dept,Adress,Fathername,Marks,subject from mentees where Regno=192226020;
++-----------+--------+------+---------+------------+-------+---------+
+| Regno     | Name   | Dept | Adress  | Fathername | Marks | subject |
++-----------+--------+------+---------+------------+-------+---------+
+| 192226020 | Swetha | CSE  | Chennai | Srinivas   |    99 | DBMS    |
++-----------+--------+------+---------+------------+-------+---------+
+1 row in set (0.01 sec)
+
+mysql>

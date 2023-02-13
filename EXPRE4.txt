@@ -1,0 +1,101 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sse;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_sse     |
++-------------------+
+| employee          |
+| mentees           |
+| student           |
+| studentdepartment |
++-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select*from mentees;
++-----------+--------+------+--------+------------+
+| Regno     | Name   | Dept | Adress | Fathername |
++-----------+--------+------+--------+------------+
+| 192225039 | Ramu   | CSE  | Porur  | Ranga      |
+| 192225030 | SUS    | CSE  | RJDRY  | Raju       |
+| 192224030 | Hari   | CSE  | BCM    | Veera      |
+| 192226020 | Swetha | CSE  | WYRA   | Srinivas   |
+| 192220301 | Devi   | CSE  | BPL    | SRI        |
++-----------+--------+------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update mentees set Dept="BEC" where Regno=192225030;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from mentees;
++-----------+--------+------+--------+------------+
+| Regno     | Name   | Dept | Adress | Fathername |
++-----------+--------+------+--------+------------+
+| 192225039 | Ramu   | CSE  | Porur  | Ranga      |
+| 192225030 | SUS    | BEC  | RJDRY  | Raju       |
+| 192224030 | Hari   | CSE  | BCM    | Veera      |
+| 192226020 | Swetha | CSE  | WYRA   | Srinivas   |
+| 192220301 | Devi   | CSE  | BPL    | SRI        |
++-----------+--------+------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update mentees set Address="Chennai"where Dept="CSE";
+ERROR 1054 (42S22): Unknown column 'Address' in 'field list'
+mysql> update metees set Adres="Chennai"where Dept="CSE";
+ERROR 1146 (42S02): Table 'sse.metees' doesn't exist
+mysql> select*from mentees;
++-----------+--------+------+--------+------------+
+| Regno     | Name   | Dept | Adress | Fathername |
++-----------+--------+------+--------+------------+
+| 192225039 | Ramu   | CSE  | Porur  | Ranga      |
+| 192225030 | SUS    | BEC  | RJDRY  | Raju       |
+| 192224030 | Hari   | CSE  | BCM    | Veera      |
+| 192226020 | Swetha | CSE  | WYRA   | Srinivas   |
+| 192220301 | Devi   | CSE  | BPL    | SRI        |
++-----------+--------+------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update mentees set Adress="Chennai"where Dept="CSE";
+Query OK, 4 rows affected (0.01 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> select*from mentees;
++-----------+--------+------+---------+------------+
+| Regno     | Name   | Dept | Adress  | Fathername |
++-----------+--------+------+---------+------------+
+| 192225039 | Ramu   | CSE  | Chennai | Ranga      |
+| 192225030 | SUS    | BEC  | RJDRY   | Raju       |
+| 192224030 | Hari   | CSE  | Chennai | Veera      |
+| 192226020 | Swetha | CSE  | Chennai | Srinivas   |
+| 192220301 | Devi   | CSE  | Chennai | SRI        |
++-----------+--------+------+---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from mentees where Fathername="Veera";
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select*from mentees;
++-----------+--------+------+---------+------------+
+| Regno     | Name   | Dept | Adress  | Fathername |
++-----------+--------+------+---------+------------+
+| 192225039 | Ramu   | CSE  | Chennai | Ranga      |
+| 192225030 | SUS    | BEC  | RJDRY   | Raju       |
+| 192226020 | Swetha | CSE  | Chennai | Srinivas   |
+| 192220301 | Devi   | CSE  | Chennai | SRI        |
++-----------+--------+------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql>

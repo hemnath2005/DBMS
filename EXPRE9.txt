@@ -1,0 +1,117 @@
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 21
+Server version: 5.5.62 MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sse;
+Database changed
+mysql> select*from mdept
+    -> ;
++--------+----------+-----------+
+| Deptid | Deptname | Rollno    |
++--------+----------+-----------+
+|      1 | CSE      | 192225039 |
+|      2 | BEC      | 192225030 |
+|      3 | BME      | 192011010 |
++--------+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select Deptid,Deptname from mdept,mentees where mentees.Regno=mdept.Rollno;
++--------+----------+
+| Deptid | Deptname |
++--------+----------+
+|      1 | CSE      |
+|      2 | BEC      |
++--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select Deptid,Deptname,Rollno from mdept,mentees where mentees.Regno=mdept.Rollno;
++--------+----------+-----------+
+| Deptid | Deptname | Rollno    |
++--------+----------+-----------+
+|      1 | CSE      | 192225039 |
+|      2 | BEC      | 192225030 |
++--------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select Name, Deptid,Deptname,Rollno from mdept m,mentees m1 where m1.Regno=m.Rollno;
++------+--------+----------+-----------+
+| Name | Deptid | Deptname | Rollno    |
++------+--------+----------+-----------+
+| Ramu |      1 | CSE      | 192225039 |
+| SUS  |      2 | BEC      | 192225030 |
++------+--------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select Name,Dept, Deptid,Deptname,Rollno from mdept,mentees where mentees.Regno=mdept.Rollno;
++------+------+--------+----------+-----------+
+| Name | Dept | Deptid | Deptname | Rollno    |
++------+------+--------+----------+-----------+
+| Ramu | CSE  |      1 | CSE      | 192225039 |
+| SUS  | BEC  |      2 | BEC      | 192225030 |
++------+------+--------+----------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> mysql> select Rollno,Deptname,Name,Address from mdept left outer join mentees on mdept.Rollno=mentees.Regno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql> select Rollno,Deptname,Name,Address from mdept left outer join mentees on' at line 1
+mysql> select Rollno,Deptname,Name,Address from mdept left outer join mentees on mdept.Rollno=mentees.Regno;
+ERROR 1054 (42S22): Unknown column 'Address' in 'field list'
+mysql> select Rollno,Deptname,Name from mdept left outer join mentees on mdept.Rollno=mentees.Regno;
++-----------+----------+------+
+| Rollno    | Deptname | Name |
++-----------+----------+------+
+| 192225039 | CSE      | Ramu |
+| 192225030 | BEC      | SUS  |
+| 192011010 | BME      | NULL |
++-----------+----------+------+
+3 rows in set (0.00 sec)
+
+mysql> select Rollno,Deptname,Name from mdept right outer join mentees on mdept.Rollno=mentees.Regno;
++-----------+----------+--------+
+| Rollno    | Deptname | Name   |
++-----------+----------+--------+
+| 192225039 | CSE      | Ramu   |
+| 192225030 | BEC      | SUS    |
+|      NULL | NULL     | Swetha |
+|      NULL | NULL     | Devi   |
++-----------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into mdept values(4,"BIOE",192011096);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into mdept values(5,"ENE",192021075);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select Rollno,Deptname,Name from mdept right outer join mentees on mdept.Rollno=mentees.Regno;
++-----------+----------+--------+
+| Rollno    | Deptname | Name   |
++-----------+----------+--------+
+| 192225039 | CSE      | Ramu   |
+| 192225030 | BEC      | SUS    |
+|      NULL | NULL     | Swetha |
+|      NULL | NULL     | Devi   |
++-----------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select*from mdept;
++--------+----------+-----------+
+| Deptid | Deptname | Rollno    |
++--------+----------+-----------+
+|      1 | CSE      | 192225039 |
+|      2 | BEC      | 192225030 |
+|      3 | BME      | 192011010 |
+|      4 | BIOE     | 192011096 |
+|      5 | ENE      | 192021075 |
++--------+----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql>
